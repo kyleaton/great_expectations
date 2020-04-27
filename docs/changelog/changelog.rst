@@ -4,6 +4,8 @@ develop
 -----------------
 * new cli command noun `checkpoint` (in the next major release this tap will be deprecated
 * DataContext.create() adds an additional directory: `checkpoints`
+* DataContext.list_checkpoints() returns a list of checkpoint names found in the project
+
 
 0.10.4
 -----------------
