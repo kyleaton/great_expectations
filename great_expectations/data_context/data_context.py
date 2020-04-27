@@ -12,7 +12,7 @@ import sys
 import uuid
 import warnings
 import webbrowser
-from typing import Union
+from typing import Union, List
 
 from marshmallow import ValidationError
 from ruamel.yaml import YAML, YAMLError
@@ -1730,7 +1730,7 @@ class DataContext(BaseDataContext):
             # Just to be explicit about what we intended to catch
             raise
 
-    def list_checkpoints(self):
+    def list_checkpoints(self) -> List[str]:
         """List checkpoints. (Experimental)"""
         # TODO mark experimental
         files = self._list_ymls_in_checkpoints_directory()
@@ -1749,8 +1749,8 @@ class DataContext(BaseDataContext):
                 checkpoint = yaml.load(f.read())
                 return self._validate_checkpoint(checkpoint)
         except FileNotFoundError:
-            raise ge_exceptions.DataContextError(
-                f"Could not find checkpoint {checkpoint_name}"
+            raise ge_exceptions.CheckpointNotFoundError(
+                f"Could not find checkpoint `{checkpoint_name}`."
             )
 
     def _list_ymls_in_checkpoints_directory(self):
@@ -1907,6 +1907,7 @@ class DataContext(BaseDataContext):
                     )
 
         return checkpoint
+
 
 class ExplorerDataContext(DataContext):
 
